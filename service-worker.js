@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/fabelio/precache-manifest.edcdf66546ef4eb055efef45564b35ab.js"
+  "/fabelio/precache-manifest.aea7da77184abecb301858100175045f.js"
 );
 
 self.addEventListener('message', (event) => {
