@@ -1,0 +1,3 @@
+export const APP_HANDLE_STATE = 'APP_HANDLE_STATE'
+export const APP_GET_DATA = 'APP_GET_DATA'
+export const APP_SUCCESS_GET_DATA = 'APP_SUCCESS_GET_DATA'
