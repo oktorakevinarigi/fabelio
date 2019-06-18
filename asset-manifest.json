@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/fabelio/static/css/main.26cd8756.chunk.css",
+    "main.js": "/fabelio/static/js/main.00d97234.chunk.js",
+    "main.js.map": "/fabelio/static/js/main.00d97234.chunk.js.map",
+    "runtime~main.js": "/fabelio/static/js/runtime~main.0524fdfa.js",
+    "runtime~main.js.map": "/fabelio/static/js/runtime~main.0524fdfa.js.map",
+    "static/css/2.865957ec.chunk.css": "/fabelio/static/css/2.865957ec.chunk.css",
+    "static/js/2.56bea4c8.chunk.js": "/fabelio/static/js/2.56bea4c8.chunk.js",
+    "static/js/2.56bea4c8.chunk.js.map": "/fabelio/static/js/2.56bea4c8.chunk.js.map",
+    "index.html": "/fabelio/index.html",
+    "precache-manifest.edcdf66546ef4eb055efef45564b35ab.js": "/fabelio/precache-manifest.edcdf66546ef4eb055efef45564b35ab.js",
+    "service-worker.js": "/fabelio/service-worker.js",
+    "static/css/2.865957ec.chunk.css.map": "/fabelio/static/css/2.865957ec.chunk.css.map",
+    "static/css/main.26cd8756.chunk.css.map": "/fabelio/static/css/main.26cd8756.chunk.css.map"
+  }
+}
