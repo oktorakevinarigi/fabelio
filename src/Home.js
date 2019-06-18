@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { getdata, handleState } from './redux/ac-app'
 import { connect } from 'react-redux'
-import { Input, Select, Form } from 'antd';
-
+import { Input, Select, Form, Row, Col } from 'antd';
+var numeral = require('numeral');
 const { Option } = Select;
 
 // const children = [];
@@ -19,27 +19,27 @@ class Home extends Component {
   viewProduk = () => {
     const { appState } = this.props
     return (
-      <div style={{margin:'auto', width:'92%'}}>
+      <div className="content">
         {
           appState.viewProduct.map((x, i) => {
             return (
-              <div style={{ width: '48%', float: 'left', margin: '1%', height: '280px', borderRadius: '5px', border: 'solid 1px #e3e3e3', boxShadow: '7px 13px 17px -9px rgba(150,150,150,0.57)' }}>
+              <div key={i} className="content-item">
                 <div style={{ margin: '30px' }}>
-                  <div style={{ fontSize: '25px', fontWeight: '700', display: 'inline-block' }}>{x.name}</div>
-                  <div style={{ display: 'inline-block', float: 'right', color: '#ff9902', fontWeight: '500' }}>{x.price}</div>
+                  <div className="content-item-name">{x.name}</div>
+                  <div className="content-item-price">IDR {numeral(x.price).format('0,0')}</div>
                   <p>{x.description.substring(0, 140)}</p>
-                  <div style={{ color: '#2f7fcf', fontWeight: '500' }}>
+                  <div className="content-item-furniture">
                     <ul>
-                      {x.furniture_style.map(y => {
+                      {x.furniture_style.map((y, j) => {
                         return (
-                          <div>
+                          <div key={j}>
                             <li>{y}</li>
                           </div>
                         )
                       })}
                     </ul>
                   </div>
-                  <p style={{ color: '#2f7fcf', fontWeight: '500', float: 'right', textDecoration: 'underline' }}>Delivery Days {x.delivery_time}</p>
+                  <p className="content-item-desc">Delivery Days {x.delivery_time}</p>
                 </div>
               </div>
             )
@@ -72,86 +72,88 @@ class Home extends Component {
   render() {
     const { appState } = this.props
     const { getFieldDecorator } = this.props.form
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-      },
-    };
     return (
       <div>
-        <div style={{ height: '250px', backgroundColor: '#106cc8' }}>
-          <div style={{ width: '90%', margin: 'auto', paddingTop: '50px' }} >
-            <Form.Item {...formItemLayout} hasFeedback>
-              {getFieldDecorator('furniture', {
-                initialValue: appState.search.furniture,
-                onChange: ((e) => this.handleState('furniture', e.currentTarget.value)),
-                rules: [
-                  {
-                    required: false,
-                    message: '',
-                  },
-                ],
-              })(<Input placeholder="Search Furniture" style={{ width: '40%' }} />)}
-            </Form.Item>
-            <Form.Item {...formItemLayout} hasFeedback>
-              {getFieldDecorator('branch_id', {
-                initialValue: appState.search.furnitureStyle,
-                onChange: ((e) => this.handleState('furnitureStyle', e)),
-                rules: [
-                  {
-                    required: false,
-                    message: '',
-                  },
-                ],
-              })(<Select
-                mode="multiple"
-                optionFilterProp="children"
-                style={{ width: '50%' }}
-                placeholder="Please select Furniture Style"
-              >
-                {appState.furniture_styles.map((x, i) => (
-                  <Option key={i} value={x}>
-                    {x}
-                  </Option>
-                ))}
-              </Select>)}
-            </Form.Item>
-            <Form.Item {...formItemLayout} hasFeedback>
-              {getFieldDecorator('deliveryTime', {
-                initialValue: appState.search.deliveryTime.length != 0 ? [] : appState.search.deliveryTime,
-                onChange: ((e) => this.handleState('deliveryTime', e)),
-                rules: [
-                  {
-                    required: false,
-                    message: '',
-                  },
-                ],
-              })(<Select
-                mode="multiple"
-                optionFilterProp="children"
-                style={{ width: '50%' }}
-                placeholder="Please select Delivery Time"
-              >
-                {
-                  appState.deliveryTime.map((x, i) => (
-                    <Option key={i} value={x.value}>
-                      {x.label}
-                    </Option>
-                  ))
-                }
-              </Select>)}
-            </Form.Item>
+        <div className="header">
+          <div className="positionHeader">
+            <Row>
+              <Col span={24}>
+                <Form.Item hasFeedback>
+                  {getFieldDecorator('furniture', {
+                    initialValue: appState.search.furniture,
+                    onChange: ((e) => this.handleState('furniture', e.currentTarget.value)),
+                    rules: [
+                      {
+                        required: false,
+                        message: '',
+                      },
+                    ],
+                  })(<Input placeholder="Search Furniture" size="large" style={{ width: '40%' }} disabled={appState.search.furnitureStyle.length != 0 || appState.search.deliveryTime.length != 0 ? true : false} />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <Form.Item hasFeedback>
+                  {getFieldDecorator('branch_id', {
+                    initialValue: appState.search.furnitureStyle,
+                    onChange: ((e) => this.handleState('furnitureStyle', e)),
+                    rules: [
+                      {
+                        required: false,
+                        message: '',
+                      },
+                    ],
+                  })(<Select
+                    mode="multiple"
+                    optionFilterProp="children"
+                    style={{ width: '80%' }}
+                    placeholder="Please select Furniture Style"
+                    size="large"
+                    disabled={appState.search.furniture != '' || appState.search.deliveryTime.length != 0 ? true : false}
+                  >
+                    {appState.furniture_styles.map((x, i) => (
+                      <Option key={i} value={x}>
+                        {x}
+                      </Option>
+                    ))}
+                  </Select>)}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item hasFeedback>
+                  {getFieldDecorator('deliveryTime', {
+                    initialValue: appState.search.deliveryTime.length != 0 ? [] : appState.search.deliveryTime,
+                    onChange: ((e) => this.handleState('deliveryTime', e)),
+                    rules: [
+                      {
+                        required: false,
+                        message: '',
+                      },
+                    ],
+                  })(<Select
+                    mode="multiple"
+                    optionFilterProp="children"
+                    style={{ width: '80%' }}
+                    size="large"
+                    placeholder="Please select Delivery Time"
+                    disabled={appState.search.furniture != '' || appState.search.furnitureStyle != 0 ? true : false}
+                  >
+                    {
+                      appState.deliveryTime.map((x, i) => (
+                        <Option key={i} value={x.value}>
+                          {x.label}
+                        </Option>
+                      ))
+                    }
+                  </Select>)}
+                </Form.Item>
+              </Col>
+            </Row>
           </div>
         </div>
-        {/* <div style={{margin:'auto'}}> */}
-          {this.viewProduk()}
-        {/* </div> */}
-      </div>
+        {this.viewProduk()}
+      </div >
     )
   }
 }

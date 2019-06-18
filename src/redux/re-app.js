@@ -31,24 +31,34 @@ const initState = {
   viewProduct: []
 };
 
+function deliveryTime(data) {
+
+}
+
 export default function App(state = initState, action) {
   switch (action.type) {
     case APP_HANDLE_STATE:
-      debugger
-      var tempData = []
-      var dataLoop
-      if (action.field == 'furniture') {
+        var tempData = []
+        var dataLoop
+
+      function furniture(){
         var filter, txtValue, dataFurniture;
-        filter = action.value.toUpperCase()
-        if (action.value != '' && state.search.furniture.length > action.value.length) {
-          dataFurniture = state.products;
-        } else if (action.value != '' && state.search.furniture.length < action.value.length) {
-          dataFurniture = state.viewProduct;
+        filter = action.value.toUpperCase();
+
+        if (state.search.furnitureStyle.length == 0 && state.search.deliveryTime.length == 0) {
+          if (action.value != '' && state.search.furniture.length > action.value.length) {
+            dataFurniture = state.products;
+          } else if (action.value != '' && state.search.furniture.length < action.value.length) {
+            dataFurniture = state.viewProduct;
+          } else {
+            state.products.map(x => {
+              tempData.push(x)
+            })
+          }
         } else {
-          state.products.map(x => {
-            tempData.push(x)
-          })
+          dataFurniture = state.viewProduct;
         }
+
         if (tempData.length == 0) {
           for (var i = 0; i < dataFurniture.length; i++) {
             txtValue = dataFurniture[i].name;
@@ -57,7 +67,10 @@ export default function App(state = initState, action) {
             }
           }
         }
-      } else if (action.field == 'furnitureStyle') {
+        
+      }
+
+      function furnitureStyle() {
         if (state.search.furnitureStyle.length == 0 && action.value.length != 0) {
           dataLoop = state.viewProduct
         } else if (state.search.furnitureStyle.length < action.value.length) {
@@ -80,7 +93,9 @@ export default function App(state = initState, action) {
             }
           }
         }
-      } else {
+      }
+      
+      function deliveryTime() {
         if (action.value.length != 0) {
           state.products.filter(function (item) {
             for (var i = 0; action.value.length > i; i++) {
@@ -100,11 +115,19 @@ export default function App(state = initState, action) {
             tempData.push(x);
           })
         }
+      }      
+      
+      if (action.field == 'furniture') {
+        furniture()
+      } else if (action.field == 'furnitureStyle') {
+        furnitureStyle()
+      } else {
+        deliveryTime()
       }
       return {
         ...state,
         search: {
-          ...state,
+          ...state.search,
           [action.field]: action.value,
         },
         viewProduct: tempData
