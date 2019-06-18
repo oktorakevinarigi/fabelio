@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export function* getDataas() {
   try {
-    const data = yield call(function (){return axios.get('http://www.mocky.io/v2/5c9105cb330000112b649af8')
+    const data = yield call(function (){return axios.get('https://www.mocky.io/v2/5c9105cb330000112b649af8')
       .then((res) => {
         return res.data
       })
